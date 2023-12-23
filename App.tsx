@@ -1,39 +1,108 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 
 const App = () => {
+  const [List, setList] = useState([
+    {name: 'Item 1'},
+    {name: 'Item 2'},
+    {name: 'Item 3'},
+    {name: 'Item 4'},
+    {name: 'Item 5'},
+    {name: 'Item 6'},
+    {name: 'Item 7'},
+    {name: 'Item 8'},
+    {name: 'Item 9'},
+    {name: 'Item 10'},
+  ]);
+
+  const DATA = [
+    {
+      title: 'Title 1',
+      data: ['Item 1-1', 'Item 1-2', 'Item 1-3'],
+    },
+    {
+      title: 'Title 2',
+      data: ['Item 2-1', 'Item 2-2', 'Item 2-3'],
+    },
+    {
+      title: 'Title 3',
+      data: ['Item 3-1'],
+    },
+    {
+      title: 'Title 4',
+      data: ['Item 4-1', 'Item 4-2', 'Item 4-3'],
+    },
+    {
+      title: 'Title 5',
+      data: ['Item 5-1', 'Item 5-2'],
+    },
+  ];
+
+  const [Refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setList([...List, {name: 'Item 10'}]);
+    setRefreshing(false);
+  };
+
   return (
-    <View style={styles.body}>
-      <View style={styles.row}>
-        <View style={styles.view1}>
-          <Text style={styles.text}>1</Text>
+    <SectionList
+      sections={DATA}
+      renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
+      renderSectionHeader={({section}) => (
+        <View style={styles.item}>
+          <Text style={styles.text}>{section.title}</Text>
         </View>
-        <View style={styles.view2}>
-          <Text style={styles.text}>2</Text>
-        </View>
-        <View style={styles.view3}>
-          <Text style={styles.text}>3</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.view4}>
-          <Text style={styles.text}>4</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.view5}>
-          <Text style={styles.text}>5</Text>
-        </View>
-      </View>
-      <View style={styles.big_row}>
-        <View style={styles.view6}>
-          <Text style={styles.text}>6</Text>
-        </View>
-        <View style={styles.view7}>
-          <Text style={styles.text}>7</Text>
-        </View>
-      </View>
-    </View>
+      )}
+    />
+    // <FlatList
+    //   // inverted {/* chenge the order asc to desc */}
+    //   // horizontal {/* vertical change into horizontal*/}
+    //   // numColumns={2} {/* number of columns */}
+    //   keyExtractor={(item, index) => index.toString()}
+    //   data={List}
+    //   renderItem={({item}) => (
+    //     <View style={styles.item}>
+    //       <Text style={styles.text}>{item.name}</Text>
+    //     </View>
+    //   )}
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing={Refreshing}
+    //       onRefresh={onRefresh}
+    //       colors={['#03363e']}
+    //     />
+    //   }
+    // />
+
+    // <View style={styles.body}>
+    //   <ScrollView
+    //     horizontal={false}
+    //     refreshControl={
+    //       <RefreshControl
+    //         refreshing={Refreshing}
+    //         onRefresh={onRefresh}
+    //         colors={['#03363e']}
+    //       />
+    //     }>
+    //     {list.map(list => {
+    //       return (
+    //         <View style={styles.item} key={list.key}>
+    //           <Text style={styles.text}>{list.list}</Text>
+    //         </View>
+    //       );
+    //     })}
+    //   </ScrollView>
+    // </View>
   );
 };
 
@@ -41,62 +110,11 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
+  item: {
+    margin: 10,
     backgroundColor: '#bccefb',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  big_row: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  view1: {
-    flex: 1,
-    backgroundColor: '#91a1e9',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view2: {
-    flex: 2,
-    flexDirection: 'row',
-    backgroundColor: '#88bf8d',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view3: {
-    flex: 3,
-    flexDirection: 'row',
-    backgroundColor: '#ffa7b6',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view4: {
-    flex: 2,
-    backgroundColor: '#ff7373',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view5: {
-    flex: 2,
-    backgroundColor: '#bf94e4',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view6: {
-    flex: 1,
-    backgroundColor: '#88bf8d',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view7: {
-    flex: 1,
-    backgroundColor: '#ec9118',
     alignItems: 'center',
     justifyContent: 'center',
   },
