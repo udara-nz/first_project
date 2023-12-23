@@ -1,38 +1,54 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 
 const App = () => {
+  const [list, setList] = useState([
+    {key: 1, list: 'Item 1'},
+    {key: 2, list: 'Item 2'},
+    {key: 3, list: 'Item 3'},
+    {key: 4, list: 'Item 4'},
+    {key: 5, list: 'Item 5'},
+    {key: 6, list: 'Item 6'},
+    {key: 7, list: 'Item 7'},
+    {key: 8, list: 'Item 8'},
+    {key: 9, list: 'Item 9'},
+    {key: 10, list: 'Item 10'},
+    {key: 11, list: 'Item 11'},
+    {key: 12, list: 'Item 12'},
+    {key: 13, list: 'Item 13'},
+    {key: 14, list: 'Item 14'},
+    {key: 15, list: 'Item 15'},
+    {key: 16, list: 'Item 16'},
+    {key: 17, list: 'Item 17'},
+  ]);
+
+  const [Refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setList([...list, {key: 15, list: 'Item 15'}]);
+    setRefreshing(false);
+  };
+
   return (
     <View style={styles.body}>
-      <View style={styles.row}>
-        <View style={styles.view1}>
-          <Text style={styles.text}>1</Text>
-        </View>
-        <View style={styles.view2}>
-          <Text style={styles.text}>2</Text>
-        </View>
-        <View style={styles.view3}>
-          <Text style={styles.text}>3</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.view4}>
-          <Text style={styles.text}>4</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.view5}>
-          <Text style={styles.text}>5</Text>
-        </View>
-      </View>
-      <View style={styles.big_row}>
-        <View style={styles.view6}>
-          <Text style={styles.text}>6</Text>
-        </View>
-        <View style={styles.view7}>
-          <Text style={styles.text}>7</Text>
-        </View>
-      </View>
+      <ScrollView
+        horizontal={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={Refreshing}
+            onRefresh={onRefresh}
+            colors={['#03363e']}
+          />
+        }>
+        {list.map(list => {
+          return (
+            <View style={styles.item} key={list.key}>
+              <Text style={styles.text}>{list.list}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
@@ -41,62 +57,11 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
+  item: {
+    margin: 10,
     backgroundColor: '#bccefb',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  big_row: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  view1: {
-    flex: 1,
-    backgroundColor: '#91a1e9',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view2: {
-    flex: 2,
-    flexDirection: 'row',
-    backgroundColor: '#88bf8d',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view3: {
-    flex: 3,
-    flexDirection: 'row',
-    backgroundColor: '#ffa7b6',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view4: {
-    flex: 2,
-    backgroundColor: '#ff7373',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view5: {
-    flex: 2,
-    backgroundColor: '#bf94e4',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view6: {
-    flex: 1,
-    backgroundColor: '#88bf8d',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view7: {
-    flex: 1,
-    backgroundColor: '#ec9118',
     alignItems: 'center',
     justifyContent: 'center',
   },
