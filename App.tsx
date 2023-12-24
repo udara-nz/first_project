@@ -2,6 +2,7 @@ import {
   FlatList,
   RefreshControl,
   ScrollView,
+  SectionList,
   StyleSheet,
   Text,
   View,
@@ -22,6 +23,29 @@ const App = () => {
     {name: 'Item 10'},
   ]);
 
+  const DATA = [
+    {
+      title: 'Title 1',
+      data: ['Item 1-1', 'Item 1-2', 'Item 1-3'],
+    },
+    {
+      title: 'Title 2',
+      data: ['Item 2-1', 'Item 2-2', 'Item 2-3'],
+    },
+    {
+      title: 'Title 3',
+      data: ['Item 3-1'],
+    },
+    {
+      title: 'Title 4',
+      data: ['Item 4-1', 'Item 4-2', 'Item 4-3'],
+    },
+    {
+      title: 'Title 5',
+      data: ['Item 5-1', 'Item 5-2'],
+    },
+  ];
+
   const [Refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -31,10 +55,24 @@ const App = () => {
   };
 
   return (
+    // <SectionList
+    //   sections={DATA}
+    //   renderItem={({item}) => (
+    //     <View style={styles.bod2}>
+    //       <Text style={styles.text}>{item}</Text>
+    //     </View>
+    //   )}
+    //   renderSectionHeader={({section}) => (
+    //     <View style={styles.item}>
+    //       <Text style={styles.text}>{section.title}</Text>
+    //     </View>
+    //   )}
+    // />
     <FlatList
+      style={styles.container}
       // inverted {/* chenge the order asc to desc */}
-      // horizontal {/* vertical change into horizontal*/}
-      // numColumns={2} {/* number of columns */}
+      // horizontal
+      numColumns={2}
       keyExtractor={(item, index) => index.toString()}
       data={List}
       renderItem={({item}) => (
@@ -79,13 +117,25 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
   },
+  container: {
+    backgroundColor: 'transparent',
+  },
   item: {
+    width: 160,
+    height: 160,
+    margin: 20,
+    backgroundColor: '#0000FF20',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bod2: {
     margin: 10,
-    backgroundColor: '#bccefb',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
+    marginLeft: 10,
     fontSize: 40,
     fontWeight: '500',
     fontStyle: 'italic',
